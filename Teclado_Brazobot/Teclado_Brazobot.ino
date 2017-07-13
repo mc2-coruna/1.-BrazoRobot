@@ -25,8 +25,6 @@ Pines para módulo BRAZOROBOT
 // Tiempo minimo entre dos pulsaciones si se maniene el boton pulsado
 int tiempoRepeticion = 250;
 
-// Sería bueno definir una opción de no repetición
-
 //
 //
 
