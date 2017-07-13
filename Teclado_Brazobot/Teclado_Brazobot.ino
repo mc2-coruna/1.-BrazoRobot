@@ -23,7 +23,11 @@ Pines para módulo BRAZOROBOT
 ----------------------------------------*/
 
 // Tiempo minimo entre dos pulsaciones si se maniene el boton pulsado
-int tiempoRepeticion = 500;
+int tiempoRepeticion = 250;
+
+//
+//
+
 
 // Terminales de entrada de los botones
 #define joystick_delante 3
@@ -56,35 +60,38 @@ void setup() {
   pinMode (ajuste_fino,      INPUT_PULLUP);
   pinMode (ajuste_normal,    INPUT_PULLUP);
   pinMode (boton_parada,     INPUT_PULLUP);
+  
+  Keyboard.begin();
 
 }
 
 void loop() {
   //Comprueba si hay alguna tecla pulsada
-  if      (!digitalRead (joystick_delante)) botonPulsado = 65;  // a
-  else if (!digitalRead (joystick_atras  )) botonPulsado = 66;  // b
-  else if (!digitalRead (joystick_izqda  )) botonPulsado = 67;  // c
-  else if (!digitalRead (joystick_drcha  )) botonPulsado = 68;  // d
+  botonPulsado = 0;
+  
+  if      (!digitalRead (joystick_delante)) botonPulsado = 65;  // A
+  else if (!digitalRead (joystick_atras  )) botonPulsado = 66;  // B
+  else if (!digitalRead (joystick_izqda  )) botonPulsado = 67;  // C
+  else if (!digitalRead (joystick_drcha  )) botonPulsado = 68;  // D
 
-  else if (!digitalRead (boton_subir   )) botonPulsado = 69;  // e
-  else if (!digitalRead (boton_bajar   )) botonPulsado = 70;  // f
+  else if (!digitalRead (boton_subir     )) botonPulsado = 69;  // E
+  else if (!digitalRead (boton_bajar     )) botonPulsado = 70;  // F
 
-  else if (!digitalRead (ajuste_fino   )) botonPulsado = 71;  // g
-  else if (!digitalRead (ajuste_normal )) botonPulsado = 72;  // h
+  else if (!digitalRead (ajuste_fino     )) botonPulsado = 71;  // G
+  else if (!digitalRead (ajuste_normal   )) botonPulsado = 72;  // H
 
-  else if (!digitalRead (boton_parada  )) botonPulsado = 74;  // i
+  else if (!digitalRead (boton_parada    )) botonPulsado = 73;  // I
 
-  else if (!digitalRead (botonPulsado  )) botonPulsado = 75;  // j
   
   // Si detecta una pulsación la envía y espera antes de volver a leer el teclado
-  if (botonPulsado > 0){
+  if (botonPulsado >= 65){
       digitalWrite (LED_BUILTIN, HIGH);
       Keyboard.press (botonPulsado);
       
       Serial.println(botonPulsado);
-      delay (10);
+      delay (5);
       Keyboard.releaseAll ();
-      delay (140);
+      delay (100);
       digitalWrite (LED_BUILTIN, LOW);
       delay (tiempoRepeticion);
       botonPulsado = 0;
